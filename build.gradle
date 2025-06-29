@@ -1,0 +1,60 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}" apply false
+    id 'io.spring.dependency-management' version "${springDependencyManagementVersion}" apply false
+}
+allprojects {
+    repositories {
+        mavenCentral()
+        flatDir {
+            dirs "$rootDir/libs"
+        }
+    }
+    group = 'com.kkh'
+    version = ''
+}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+
+    compileJava.options.encoding = 'UTF-8'
+    compileTestJava.options.encoding = 'UTF-8'
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    dependencies {
+        // Spring Boot Starters
+        implementation('org.springframework.boot:spring-boot-starter-web')
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+        implementation 'org.springframework.boot:spring-boot-configuration-processor'
+        // Test Dependencies
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        // Lombok
+        compileOnly 'org.projectlombok:lombok'
+        // Annotation Processors
+        annotationProcessor 'org.projectlombok:lombok'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+
+    tasks.register('downloadDependencies') {
+        doLast {
+            configurations.configureEach { Configuration configuration ->
+                if (configuration.canBeResolved) {
+                    configuration.resolve()
+                }
+            }
+        }
+    }
+}

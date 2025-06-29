@@ -1,0 +1,21 @@
+package com.kkh.product.restaurant.model.dto.response;
+
+import com.kkh.product.restaurant.model.entity.Restaurant;
+import lombok.*;
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class RestaurantDetailResponse {
+    private String restaurantId;
+    private String ownerId;
+    private String name;
+    private String description;
+    private String category;
+    private int viewCount;
+    private int orderCount;
+    private int score;
+    private Restaurant.OpenHours openHours;
+}
