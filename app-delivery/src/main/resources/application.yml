@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: delivery
+
+  data:
+    mongodb:
+      host: ${HOST}
+      port: 27017
+      auto-index-creation: true
+      database: webflux
+server:
+  port: 8082
+
