@@ -11,3 +11,7 @@ spring:
 server:
   port: 8080
 
+grpc:
+  owner:
+    host: localhost
+    port: 6565

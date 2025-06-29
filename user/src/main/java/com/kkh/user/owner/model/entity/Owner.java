@@ -1,15 +1,13 @@
 package com.kkh.user.owner.model.entity;
 
 import com.kkh.user._support.enums.Role;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -24,7 +22,9 @@ public class Owner {
     private String id;
     private String name;
     private String phoneNumber;
-    private List<String> restaurantList;
+    @Setter
+    @Builder.Default
+    private List<String> restaurantList = new ArrayList<>();
     @Indexed(unique = true)
     private String email;
     private Long settlement;

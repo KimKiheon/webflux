@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.kkh.grpc"; // user 모듈에만 존재
+option java_outer_classname = "OwnerProto";
+
+service OwnerService {
+  rpc AddRestaurantToOwner (AddRestaurantRequest) returns (AddRestaurantResponse);
+}
+
+message AddRestaurantRequest {
+  string ownerId = 1;
+  string restaurantId = 2;
+}
+
+message AddRestaurantResponse {
+  bool success = 1;
+  string message = 2;
+}

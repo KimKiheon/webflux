@@ -1,5 +1,6 @@
 package com.kkh.product.restaurant.service;
 
+import com.kkh.product._support.grpc.OwnerGrpcClient;
 import com.kkh.product.restaurant.model.dto.request.RestaurantRegisterRequest;
 import com.kkh.product.restaurant.model.dto.response.RestaurantDetailResponse;
 import com.kkh.product.restaurant.model.dto.response.RestaurantListResponse;
@@ -17,6 +18,8 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
+    private final OwnerGrpcClient ownerGrpcClient;
+
 
     @Transactional(readOnly = true)
     public Mono<RestaurantDetailResponse> findById(String id) {
@@ -31,12 +34,18 @@ public class RestaurantService {
                 .map(RestaurantListResponse::toList);
     }
 
-    @Transactional
-    public Mono<Void> register(RestaurantRegisterRequest request) {
+    public Mono<Object> register(RestaurantRegisterRequest request) {
         Restaurant entity = RestaurantRegisterRequest.toEntity(request);
-        return restaurantRepository.findById(entity.getOwnerId())
-                .flatMap(exist -> Mono.error(new IllegalStateException("이미 존재하는 식당입니다")))
-                .switchIfEmpty(restaurantRepository.save(entity)).then();
+
+        return restaurantRepository.findByOwnerIdAndName(entity.getOwnerId(), entity.getName())
+                .flatMap(existing -> Mono.error(new IllegalStateException("이미 존재하는 식당입니다")))
+                .switchIfEmpty(Mono.defer(() ->
+                        restaurantRepository.save(entity)
+                                .flatMap(saved ->
+                                        ownerGrpcClient.addRestaurantToOwner(entity.getOwnerId(), saved.getId())
+                                                .thenReturn(saved.getId())
+                                )
+                ));
     }
     @Transactional
     public Mono<Void> delete(String id) {

@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Slf4j
@@ -21,7 +23,7 @@ public class OwnerRegisterRequest {
         return Owner.builder()
                 .name(request.getName())
                 .phoneNumber(request.getPhoneNumber())
-                .restaurantList(null)
+                .restaurantList(List.of())
                 .email(request.getEmail())
                 .settlement(0L)
                 .role(Role.OWNER)

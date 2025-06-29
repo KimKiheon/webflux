@@ -26,7 +26,7 @@ public class RestaurantController {
     }
 
     @PostMapping
-    public Mono<Void> register(RestaurantRegisterRequest request) {
+    public Mono<Object> register(@RequestBody  RestaurantRegisterRequest request) {
         return restaurantService.register(request);
     }
 
