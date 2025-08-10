@@ -1,13 +1,29 @@
 spring:
   application:
     name: user
+  datasource:
+    jdbc-url: jdbc:mysql://${HOST}/webflux?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${USER}
+    password: ${PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  r2dbc:
+    url: r2dbc:mysql://${HOST}/webflux
+    username: ${USER}
+    password: ${PASSWORD}
 
   data:
     mongodb:
-      host: 211.62.140.88
-      port: 27017
-      auto-index-creation: true
-      database: webflux
+      reactive:
+        host: 211.62.140.88
+        port: 27017
+        auto-index-creation: true
+        database: webflux
+      uri:
+        host: 211.62.140.88
+        port: 27017
+        auto-index-creation: true
+        database: webflux
+
 server:
   port: 8081
 

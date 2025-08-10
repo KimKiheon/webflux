@@ -1,4 +1,4 @@
 rootProject.name = 'project'
 
 
-include 'product, user'
+include 'product', 'user', 'order'

@@ -1,4 +1,4 @@
-package com.kkh.user.user.model.entity;
+package com.kkh.user.user.model.entity.mongo;
 
 import com.kkh.user._support.enums.Role;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "users")
 @CompoundIndexes({
 })
-public class User {
+public class MongoUser {
     @Id
     private String id;
     private String name;
