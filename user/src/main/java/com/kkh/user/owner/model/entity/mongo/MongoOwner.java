@@ -1,4 +1,4 @@
-package com.kkh.user.owner.model.entity;
+package com.kkh.user.owner.model.entity.mongo;
 
 import com.kkh.user._support.enums.Role;
 import lombok.*;
@@ -17,7 +17,7 @@ import java.util.List;
 @Document(collection = "owners")
 @CompoundIndexes({
 })
-public class Owner {
+public class MongoOwner {
     @Id
     private String id;
     private String name;

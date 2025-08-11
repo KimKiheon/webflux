@@ -1,6 +1,6 @@
 package com.kkh.user.owner.model.dto.response;
 
-import com.kkh.user.owner.model.entity.Owner;
+import com.kkh.user.owner.model.entity.mongo.MongoOwner;
 import lombok.*;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class OwnerDetailResponse {
     private List<String> restaurantList;
     private Long settlement;
 
-    public static OwnerDetailResponse toResponse(Owner owner) {
+    public static OwnerDetailResponse toResponse(MongoOwner owner) {
         return OwnerDetailResponse.builder()
                 .id(owner.getId())
                 .name(owner.getName())
